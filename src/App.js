@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useState } from "react";
 import "./App.css";
-import { select, axisBottom, axisRight, scaleLinear, scaleBand } from "d3";
+import { select, axisBottom, axisRight, scaleLinear, scaleBand, max } from "d3";
 
 function App() {
   const [data, setData] = useState([20, 12, 25, 35, 50, 75, 80]);
@@ -40,6 +40,20 @@ function App() {
       .attr("x", (_, i) => xScale(i))
       .attr("y", -150)
       .attr("width", xScale.bandwidth())
+      .on("mouseenter", (value, i) => {
+        svg
+          .selectAll(".tooltip")
+          .data([value])
+          .join(enter => enter.append("text").attr("y", yScale(value) - 4))
+          .attr("class", "tooltip")
+          .text(value)
+          .attr("x", xScale(i) + xScale.bandwidth() / 2)
+          .attr("text-anchor", "middle")
+          .transition()
+          .attr("y", yScale(value) - 5)
+          .attr("opacity", 1);
+      })
+      .on("mouseleave", () => svg.select(".tooltip").remove())
       .transition()
       .attr("fill", colorScale)
       .attr("height", value => 150 - yScale(value));
@@ -58,8 +72,19 @@ function App() {
       <button onClick={() => setData(data => data.map(val => val + 3))}>
         Update data
       </button>
+      <br />
       <button onClick={() => setData(data => data.filter(val => val < 38))}>
         Filter data
+      </button>
+      <br />
+      <button
+        onClick={() =>
+          setData(data => {
+            return [...data, Math.floor(Math.random() * 100)];
+          })
+        }
+      >
+        Add data
       </button>
     </div>
   );
