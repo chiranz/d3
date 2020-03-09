@@ -1,24 +1,24 @@
 import React, { useRef, useEffect, useState } from "react";
 import "./App.css";
-import { select } from "d3";
+import { select, line, curveCardinal } from "d3";
 
 function App() {
-  const [data, setData] = useState([20, 12, 25, 35, 50]);
+  const [data, setData] = useState([20, 12, 25, 35, 50, 75, 80]);
   const svgRef = useRef();
   const randomColor = () =>
     `#${((Math.random() * 0xffffff) << 0).toString(16)}`;
   useEffect(() => {
     const svg = select(svgRef.current);
+    const myLine = line()
+      .x((_, index) => index * 50)
+      .y(value => 150 - value)
+      .curve(curveCardinal);
     svg
-      .selectAll("circle")
-      .data(data)
-      .join(
-        enter => enter.append("circle"),
-        update => update.attr("class", "updated")
-      )
-      .attr("r", value => value)
-      .attr("cx", value => value * 2)
-      .attr("cy", value => value * 2)
+      .selectAll("path")
+      .data([data])
+      .join("path")
+      .attr("d", value => myLine(value))
+      .attr("fill", "none")
       .attr("stroke", randomColor());
   }, [data]);
   return (
