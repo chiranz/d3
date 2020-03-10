@@ -8,6 +8,28 @@ svg {
 .chart-wrapper {
   margin-bottom: 2rem;
 }
+.call-to-action {
+  padding: 0.5rem 2rem;
+  border: 1px solid rgb(40, 40, 184);
+  background: rgb(40, 40, 184);
+  color: #ffffff;
+  border-radius: 0.3rem;
+  cursor: pointer;
+  font-weight: bold;
+  text-transform: capitalize;
+  outline: none;
+  transition: color, background 500ms ease;
+}
+
+button::-moz-focus-inner {
+  border: 0;
+}
+
+.call-to-action:hover {
+  color: #000000;
+  background: #ffffff;
+}
+
 #root {
   display: flex;
   flex-direction: column;

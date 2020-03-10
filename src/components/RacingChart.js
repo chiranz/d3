@@ -98,10 +98,13 @@ export default function RacingChart() {
   return (
     <div>
       <h1>Racing bar chart</h1>
-      <div ref={wrapperRef} style={{ marginBottom: "2rem" }}>
+      <div ref={wrapperRef} className="chart-wrapper">
         <svg ref={svgRef} height="300"></svg>
       </div>
-      <button onClick={() => setStart(start => !start)}>
+      <button
+        className="call-to-action"
+        onClick={() => setStart(start => !start)}
+      >
         {start ? "Stop the race" : "Start the race"}
       </button>
       <p>Iteration: {iteration}</p>
