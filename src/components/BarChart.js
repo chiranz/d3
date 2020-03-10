@@ -1,10 +1,12 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { select, axisBottom, axisRight, scaleLinear, scaleBand } from "d3";
 import { useResizeObserver } from "../hooks";
 
-function BarChart({ data }) {
+function BarChart() {
   const svgRef = useRef();
   const wrapperRef = useRef();
+  const [data, setData] = useState([20, 12, 25, 35, 50, 75, 80]);
+
   const dimensions = useResizeObserver(wrapperRef);
   useEffect(() => {
     const svg = select(svgRef.current);
@@ -61,12 +63,31 @@ function BarChart({ data }) {
       .attr("height", value => dimensions.height - yScale(value));
   }, [data, dimensions]);
   return (
-    <div ref={wrapperRef} className="chart-wrapper">
-      <svg ref={svgRef}>
-        <g className="x-axis"></g>
-        <g className="y-axis"></g>
-      </svg>
-    </div>
+    <>
+      <div ref={wrapperRef} className="chart-wrapper">
+        <svg ref={svgRef}>
+          <g className="x-axis"></g>
+          <g className="y-axis"></g>
+        </svg>
+      </div>
+      <button onClick={() => setData(data => data.map(val => val + 3))}>
+        Update data
+      </button>
+      <br />
+      <button onClick={() => setData(data => data.filter(val => val < 140))}>
+        Filter data
+      </button>
+      <br />
+      <button
+        onClick={() =>
+          setData(data => {
+            return [...data, Math.floor(Math.random() * 140)];
+          })
+        }
+      >
+        Add data
+      </button>
+    </>
   );
 }
 
