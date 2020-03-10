@@ -1,6 +1,20 @@
 svg {
   background: #dedede;
   overflow: visible;
+  margin: auto;
+  width: 100%;
+  display: block;
+}
+.chart-wrapper {
+  margin-bottom: 2rem;
+}
+#root {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+  height: 100vh;
+  padding: 0 2rem;
 }
 
 .App {
