@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { randomColorGenerator } from "../utils";
+import { randomColorGenerator, getTextColor } from "../utils";
 import { useInterval, useResizeObserver } from "../hooks";
 import { select, scaleBand, scaleLinear, max } from "d3";
 
@@ -91,6 +91,7 @@ export default function RacingChart() {
       .attr("class", "label")
       .attr("x", 10)
       .attr("justify-content", "centre")
+      .attr("fill", d => getTextColor(d.color))
       .transition()
       .attr("y", (_, i) => yScale(i) + yScale.bandwidth() / 2 + 5);
   }, [data, dimensions]);
